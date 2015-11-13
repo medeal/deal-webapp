@@ -69,7 +69,7 @@ while($row = $result->fetch_assoc()) {
 		echo "<CENTER><p>$".$StartPrice."</p></CENTER>";
 		echo "<CENTER><p>".$StoreName."</p></CENTER>";
 		echo "<CENTER><p>新竹市</p></CENTER>";
-	    echo "<a href='#' class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
+	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
 		echo "<a href='http://www.medeal.tk/ProductDetail.php?ProductID=".$ProductID."' class='btn btn-primary btn-lg btn-block'>詳細</a>";
 		echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>取得優惠</a>";
 		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions'>取得更多優惠!</a>";
@@ -89,7 +89,26 @@ while($row = $result->fetch_assoc()) {
   <script>
 $(document).ready(function(){
 
-     
+     	$("a").click(function(){
+  //$("p").slideToggle();
+  //alert(this.id);
+  $("#ActionID").val(this.id);
+	});
+	
+	$(function(){
+    $('#BuyProductForm').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "http://www.medeal.tk/process.php", //this is the submit URL
+            type: 'POST', //or POST
+            data: $('form.contact').serialize(),
+            success: function(data){
+                 alert('已購買完成,謝謝!!');
+				 $("#PurchaseMethod").modal('hide'); 
+            }
+        });
+    });
+});
         
 });
 </script>
