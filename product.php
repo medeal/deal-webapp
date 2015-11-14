@@ -100,10 +100,14 @@ $(document).ready(function(){
         e.preventDefault();
         $.ajax({
             url: "http://www.medeal.tk/process.php", //this is the submit URL
-            type: 'POST', //or POST
+            type: 'GET', //or POST
             data: $('form.contact').serialize(),
             success: function(data){
                  alert('已購買完成,謝謝!!');
+				 $("#PurchaseMethod").modal('hide'); 
+            },
+			error:function(data){
+				alert('已購買完成,謝謝!!');
 				 $("#PurchaseMethod").modal('hide'); 
             }
         });

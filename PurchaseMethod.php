@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body">
 	
-      <form class="contact" id="BuyProductForm" action="process.php" method="POST"><h3 class=form-signin-heading>請選擇購買方式</h3>
+      <form class="contact" id="BuyProductForm" action="process.php" method="GET"><h3 class=form-signin-heading>請選擇購買方式</h3>
   <div id="product">
 	  <input id="ActionID" name="ActionID" type="hidden" />
 	  </div>
