@@ -72,7 +72,7 @@ while($row = $result->fetch_assoc()) {
 	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
 		echo "<a href='http://www.medeal.tk/ProductDetail.php?ProductID=".$ProductID."' class='btn btn-primary btn-lg btn-block'>詳細</a>";
 		echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>取得優惠</a>";
-		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions'>取得更多優惠!</a>";
+		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:none;' >取得更多優惠!</a>";
 		if($Amount==0){
 			echo "<a href='#' id=RunOut_".$ProductID." class='btn btn-default btn-lg btn-block'>已搶完</a>";
 		};
@@ -89,10 +89,23 @@ while($row = $result->fetch_assoc()) {
   <script>
 $(document).ready(function(){
 
-     	$("a").click(function(){
+    $("a").click(function(){
   //$("p").slideToggle();
-  //alert(this.id);
-  $("#ActionID").val(this.id);
+       // alert(this.id);
+		var ActionID=this.id;
+		$("#ActionID").val(this.id);
+		
+		//alert(ActionID);
+		//var str = "How are you doing today?";
+		var ActionStr = ActionID.split("_");
+		var Action=ActionStr[0];
+		var ProductID=ActionStr[1];
+		//alert(Action[0]);
+		if(Action=="Get"){
+			//alert(ActionStr);
+			$("#Get_"+ProductID).css("display", "none");
+			$("#More_"+ProductID).removeAttr("style");
+		}
 	});
 	
 	$(function(){
