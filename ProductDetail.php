@@ -75,7 +75,9 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
 
 	 $Image_1=$row["Image_1"];
+	 $Image_2=$row["Image_2"];
 	 $StartPrice=$row["StartPrice"];
+	 $ProductID=$row["ProductID"];
 	 $ProductName=$row["ProductName"];
 	 $Amount=$row["Amount"];
 	 $ProductDesc=$row["ProductDesc"];
@@ -83,6 +85,10 @@ if ($result->num_rows > 0) {
 	 $StoreAddress=$row["StoreAddress"];
 	 $StorePhone=$row["StorePhone"];
     }
+	echo "<div class='panel panel-info'>";
+ echo "<div class='panel-heading'>";
+ echo "<center><h3 class='panel-title'>商品介紹</h3></center>";
+  echo "</div>";
 
    echo "<table>";
    echo "<tr>";
@@ -90,30 +96,32 @@ if ($result->num_rows > 0) {
     echo "<img src='".$Image_1."' alt='Smiley face' class='img-thumbnail'>";
    echo "</th>";
     echo "<th  style ='width:50%;'>";
-echo "<div class='well well-lg'>";
-	 echo "<CENTER><h3>$".$StartPrice."</h3></CENTER>";
- echo "<CENTER><h3>".$ProductName."</h3></CENTER>";
-  echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
-echo "</div>";
+  echo "<img src='".$Image_2."' alt='Smiley face' class='img-thumbnail'>";
    	 echo "</th>";
    echo "</tr>";
  
 echo "</table>";
-  
+ echo "<hr>";
+  //echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
+echo "<font color='gray'>25人在降價,只剩1個</font>";	
+	echo "<font color='orange'><h3>NT$".$StartPrice."</h3></font>";
+ echo "<b>".$ProductName."</b>";
+ 
+ 
 
-echo "<div class='panel panel-info'>";
- echo "<div class='panel-heading'>";
- echo "<h3 class='panel-title'>商品資訊</h3>";
-  echo "</div>";
+
   echo "<h4> ".$ProductDesc."</h4>";
-  echo "<h4>商店:".$StoreName."</h4>";
-  echo "<h4>地址:".$StoreAddress."</h4>";
+  echo "<hr>";
+  echo "店家名稱:".$StoreName;
+  echo "<br>";
+  echo "店家地址:".$StoreAddress;
 
-echo "<a href='tel:098-9980937'><img src='http://mediacdn.waldenu.edu/-/media/Images/WAL/pages-modules/icons/phone-icon.png'/></a>";
+echo "<a href='tel:098-9980937'>&#9742;</a>";
 
   echo "</div>";
   
-  echo "<a href='#' class='btn btn-success btn-lg btn-block'>立即購買</a>";
+
+  	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
  
 } else {
     echo "0 results";
@@ -123,9 +131,54 @@ $conn->close();
 ?>
 </div>
 </div>
+ <script>
+$(document).ready(function(){
+
+    $("a").click(function(){
+  //$("p").slideToggle();
+       // alert(this.id);
+		var ActionID=this.id;
+		$("#ActionID").val(this.id);
+		
+		//alert(ActionID);
+		//var str = "How are you doing today?";
+		var ActionStr = ActionID.split("_");
+		var Action=ActionStr[0];
+		var ProductID=ActionStr[1];
+		//alert(Action[0]);
+		if(Action=="Get"){
+			//alert(ActionStr);
+			$("#Get_"+ProductID).css("display", "none");
+			$("#More_"+ProductID).removeAttr("style");
+		}
+	});
+	
+	$(function(){
+    $('#BuyProductForm').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "http://www.medeal.tk/process.php", //this is the submit URL
+            type: 'GET', //or POST
+            data: $('form.contact').serialize(),
+            success: function(data){
+                 alert('已購買完成,謝謝!!');
+				 $("#PurchaseMethod").modal('hide'); 
+            },
+			error:function(data){
+				alert('已購買完成,謝謝!!');
+				 $("#PurchaseMethod").modal('hide'); 
+            }
+        });
+    });
+});
+        
+});
+</script>
 <?php
 //include Login php page
 include_once "Login.php";
+//include purchase method php page
+include_once "PurchaseMethod.php";
 ?>
 </body>
 </html>
