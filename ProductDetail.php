@@ -16,7 +16,18 @@
 <script src=https://kkbruce.tw/Scripts/AssetsBS3/ie-emulation-modes-warning.js></script> 
 <!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
-
+<style>
+hr{
+      display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+	
+}
+</style>
 
 </head>
 <body>
@@ -85,7 +96,7 @@ if ($result->num_rows > 0) {
 	 $StoreAddress=$row["StoreAddress"];
 	 $StorePhone=$row["StorePhone"];
     }
-	echo "<div class='panel panel-info'>";
+	echo "<div class='panel panel-primary'>";
  echo "<div class='panel-heading'>";
  echo "<center><h3 class='panel-title'>商品介紹</h3></center>";
   echo "</div>";
@@ -118,10 +129,11 @@ echo "<font color='gray'>25人在降價,只剩1個</font>";
 
 echo "<a href='tel:098-9980937'>&#9742;</a>";
 
-  echo "</div>";
+
   
 
   	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
+		  echo "</div>";
  
 } else {
     echo "0 results";
