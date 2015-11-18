@@ -8,6 +8,7 @@
 <link rel=icon href=https://kkbruce.tw/Content/AssetsBS3/img/favicon.ico>
 <title>搶捷</title>
 <link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css rel=stylesheet>
+<!--<link href='../css/bootstrap.min.css' rel=stylesheet>-->
 <link href=https://kkbruce.tw/Content/AssetsBS3/examples/starter-template.css rel=stylesheet> 
  <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js></script>
  <script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js></script>
@@ -131,9 +132,12 @@ echo "<a href='tel:098-9980937'>&#9742;</a>";
 
 
   
-
+	echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>砍價!</a>";
+		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:none;' >砍更多價!!</a>";
   	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
-		  echo "</div>";
+	
+		 
+		 echo "</div>";
  
 } else {
     echo "0 results";
@@ -147,6 +151,30 @@ $conn->close();
 $(document).ready(function(){
 
     $("a").click(function(){
+	var check_session;
+	function CheckForSession() {
+
+		var str="chklogout=true";
+		jQuery.ajax({
+				type: "POST",
+				url: "chk_session.php",
+				data: str,
+				cache: false,
+				success: function(res){
+					if(res == "1") {
+						alert('Your session has been expired!');
+						$('#Login').modal('show');
+					}
+					
+					
+				}
+		});
+	}
+//check_session = setInterval(CheckForSession, 5000);
+
+	check_session =CheckForSession();
+	//alert(check_session);
+	
   //$("p").slideToggle();
        // alert(this.id);
 		var ActionID=this.id;
@@ -182,8 +210,27 @@ $(document).ready(function(){
             }
         });
     });
+	
 });
-        
+    $("#RegisterLogin").click(function(){
+		//alert("trigger register");
+		alert($("#inputEmail").val());
+		//$(#inputPassword).val()
+		$.ajax({
+            url: "http://www.medeal.tk/PushMail.php", //this is the submit URL
+            type: 'GET', //or POST
+            data: $('form.contact').serialize(),
+            success: function(data){
+                 alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
+				 $("#Login").modal('hide'); 
+            },
+			error:function(data){
+				alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
+				 $("#Login").modal('hide'); 
+            }
+        });
+		
+	})     
 });
 </script>
 <?php
@@ -191,6 +238,8 @@ $(document).ready(function(){
 include_once "Login.php";
 //include purchase method php page
 include_once "PurchaseMethod.php";
+//include mailgun mail php page
+include_once "mailgun.php";
 ?>
 </body>
 </html>

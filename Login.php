@@ -15,7 +15,7 @@
 <input type=password id=inputPassword class=form-control placeholder=Password required>
 <div class=checkbox><label> <input type=checkbox value=remember-me>記住我</label></div>
 <div><label><a href='#' >忘記密碼</a></label></div>
-<button class="btn btn-lg btn-success btn-block" type=submit>Email註冊/登入</button>
+<button id="RegisterLogin" class="btn btn-lg btn-success btn-block" type=submit>Email註冊/登入</button>
    <button class="btn btn-lg btn-primary btn-block" type=submit>Facebook 登入</button>
 </form>
       </div>
