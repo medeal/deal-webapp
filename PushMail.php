@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 function send_simple_message($from,$to,$subject,$body){  
   $ch = curl_init();
   //from:who sent the mail
@@ -39,8 +39,28 @@ $conn = new mysqli($servername, $username, $password,$dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+//$sqlquery="Select * from Member where Email='".$_POST["inputEmail"]. " and Email='".$_POST["inputPassword"]."'";
+//if ($conn->query($sql) === TRUE) {
+$results=$conn->query("SELECT * FROM Member WHERE Email='".$_POST["inputEmail"]."' and Password='".$_POST["inputPassword"]."'");
+//mysql_select_db($dbname, $conn);
+//$result = mysql_query("SELECT COUNT( 1 ) FROM Member WHERE Email ='".$_POST["inputEmail"]."'");
+//$row = mysql_fetch_array($result);
+//$total=0;
+//while($row=$results->fetch_assoc()){
+//	echo "run loop";
+//	$total = $row[0];
+//	echo "row:".$row[0];
+//}
 
-$sql = "INSERT INTO Member(Email,Password,Status) VALUES('".$_POST["inputEmail"]."','".$_POST["inputPassword"]."','N')";
+echo $total;
+echo "test";
+//if($total==1){
+if($results->num_rows > 0) {
+    echo "Login action";
+   $_SESSION["UserEmail"]=$_POST["inputEmail"];
+}else{
+   // echo "Error: " . $sql . "<br>" . $conn->error;
+   $sql = "INSERT INTO Member(Email,Password,Status) VALUES('".$_POST["inputEmail"]."','".$_POST["inputPassword"]."','N')";
 
 if ($conn->query($sql) === TRUE) {
    // echo "New record created successfully";
@@ -56,4 +76,7 @@ $Body=$Body."<a href='http://www.medeal.tk/ProductDetail.php?ProductID=A002' tar
 //example to send mail:
 //echo send_simple_message("lisivo@gmail.com","lisivo@gmail.com","test2","body test");
 send_simple_message("admin@medeal.tk",$_POST["inputEmail"],"搶捷帳號驗證啟動信",$Body);
+}
+$results->free();
+$conn->close();
 ?>
