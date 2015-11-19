@@ -219,7 +219,7 @@ $(document).ready(function(){
 		$.ajax({
             url: "http://www.medeal.tk/PushMail.php", //this is the submit URL
             type: 'GET', //or POST
-            data: $('form.contact').serialize(),
+            data: $('form.form-signin').serialize(),
             success: function(data){
                  alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
 				 $("#Login").modal('hide'); 

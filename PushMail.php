@@ -20,6 +20,14 @@ function send_simple_message($from,$to,$subject,$body){
   curl_close($ch);
   return $result;
 }
+//echo "show somthing below:";
+//echo $_GET["inputEmail"];
+//echo $_GET["inputPassword"];
+
+//需要將帳號資料insert到memeber table
+//需要get 啟動url
+
 //example to send mail:
-echo send_simple_message("lisivo@gmail.com","lisivo@gmail.com","test2","body test");
+//echo send_simple_message("lisivo@gmail.com","lisivo@gmail.com","test2","body test");
+echo send_simple_message("admin@medeal.tk",$_GET["inputEmail"],"搶捷帳號驗證啟動信","請點擊以下連結,立即啟動您的帳號:");
 ?>
