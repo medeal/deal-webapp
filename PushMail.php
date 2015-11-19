@@ -1,4 +1,5 @@
 <?php
+
 function send_simple_message($from,$to,$subject,$body){  
   $ch = curl_init();
   //from:who sent the mail
@@ -18,16 +19,41 @@ function send_simple_message($from,$to,$subject,$body){
                       'html' => $body));
   $result = curl_exec($ch);
   curl_close($ch);
-  return $result;
+  //return $result;
 }
+
 //echo "show somthing below:";
 //echo $_GET["inputEmail"];
 //echo $_GET["inputPassword"];
 
 //需要將帳號資料insert到memeber table
-//需要get 啟動url
+$DBconfig=parse_ini_file("DBconfig.ini");
+$servername = $DBconfig['servername'];
+$username = $DBconfig['username'];
+$password = $DBconfig['password'];
+$dbname =$DBconfig['dbname'];
+// Create connection
+$conn = new mysqli($servername, $username, $password,$dbname);
 
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "INSERT INTO Member(Email,Password,Status) VALUES('".$_POST["inputEmail"]."','".$_POST["inputPassword"]."','N')";
+
+if ($conn->query($sql) === TRUE) {
+   // echo "New record created successfully";
+} else {
+   // echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+//需要get 啟動url
+$Body="請點擊以下連結,立即啟動您的帳號:<br>";
+$Body=$Body."<a href='http://www.medeal.tk/UserValidation.php?Email=".$_POST["inputEmail"]."' target='_blank' title='啟動帳號'>點擊啟動您的帳號</a>";
+$Body=$Body."<br>";
+$Body=$Body."<a href='http://www.medeal.tk/ProductDetail.php?ProductID=A002' target='_blank' title='商品連結'>搶購商品連結</a>";
 //example to send mail:
 //echo send_simple_message("lisivo@gmail.com","lisivo@gmail.com","test2","body test");
-echo send_simple_message("admin@medeal.tk",$_GET["inputEmail"],"搶捷帳號驗證啟動信","請點擊以下連結,立即啟動您的帳號:");
+send_simple_message("admin@medeal.tk",$_POST["inputEmail"],"搶捷帳號驗證啟動信",$Body);
 ?>

@@ -153,27 +153,33 @@ $(document).ready(function(){
     $("a").click(function(){
 	var check_session;
 	function CheckForSession() {
-
 		var str="chklogout=true";
 		jQuery.ajax({
 				type: "POST",
 				url: "chk_session.php",
 				data: str,
 				cache: false,
+				async: false, 
 				success: function(res){
 					if(res == "1") {
-						alert('Your session has been expired!');
+						alert('請註冊或登入帳號');
 						$('#Login').modal('show');
+						check_session='1';
 					}
 					
 					
 				}
 		});
+		return check_session;
 	}
 //check_session = setInterval(CheckForSession, 5000);
 
 	check_session =CheckForSession();
 	//alert(check_session);
+	if(check_session=="1"){
+		return false;
+	}
+	
 	
   //$("p").slideToggle();
        // alert(this.id);
@@ -212,13 +218,11 @@ $(document).ready(function(){
     });
 	
 });
-    $("#RegisterLogin").click(function(){
-		//alert("trigger register");
-		alert($("#inputEmail").val());
-		//$(#inputPassword).val()
+    $("#RegisterLogin").click('submit', function(e){
+		 e.preventDefault();
 		$.ajax({
             url: "http://www.medeal.tk/PushMail.php", //this is the submit URL
-            type: 'GET', //or POST
+            type: 'POST', //or POST
             data: $('form.form-signin').serialize(),
             success: function(data){
                  alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
