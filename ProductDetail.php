@@ -17,6 +17,7 @@
 <script src=https://kkbruce.tw/Scripts/AssetsBS3/ie-emulation-modes-warning.js></script> 
 <!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script>
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
+
 <style>
 hr{
       display: block;
@@ -72,6 +73,8 @@ if ($conn->connect_error) {
 
  $ProductID=$_GET['ProductID'];
  $sql = "SELECT * FROM Product,Store where Product.StoreID=Store.StoreID and ProductID='".$ProductID."'";
+ $sql2="SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavorPrice FROM MemberFavor where ProductID='".$ProductID."'";
+
 
 $result = $conn->query($sql);
 
@@ -85,12 +88,15 @@ if ($result->num_rows > 0) {
 	$StoreName="";
 	$StoreAddress="";
 	$StorePhone="";
+	$FavorPrice=0;
+	$TotalFavorPrice=0;
 	// output data of each row
     while($row = $result->fetch_assoc()) {
 
 	 $Image_1=$row["Image_1"];
 	 $Image_2=$row["Image_2"];
 	 $StartPrice=$row["StartPrice"];
+	 $CurrentPrice=$row["CurrentPrice"];
 	 $ProductID=$row["ProductID"];
 	 $ProductName=$row["ProductName"];
 	 $Amount=$row["Amount"];
@@ -99,6 +105,13 @@ if ($result->num_rows > 0) {
 	 $StoreAddress=$row["StoreAddress"];
 	 $StorePhone=$row["StorePhone"];
     }
+	
+	$result2 = $conn->query($sql2);
+	while($row = $result2->fetch_assoc()) {
+		$TotalFavorPrice=$row["TotalFavorPrice"];
+	}
+	$FavorPrice=$StartPrice-$TotalFavorPrice;
+	
 	echo "<div class='panel panel-primary'>";
  echo "<div class='panel-heading'>";
  echo "<center><h3 class='panel-title'>商品介紹</h3></center>";
@@ -118,7 +131,7 @@ echo "</table>";
  echo "<hr>";
   //echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
 echo "<font color='gray'>25人在降價,只剩1個</font>";	
-	echo "<font color='orange'><h3>NT$".$StartPrice."</h3></font>";
+	echo "<font color='orange'><h3>NT$".$FavorPrice."</h3></font>";
  echo "<b>".$ProductName."</b>";
  
  
@@ -220,6 +233,25 @@ $(document).ready(function(){
 		if(Action=="Get"){
 			//alert(ActionStr);
 			$("#Get_"+ProductID).css("display", "none");
+				/*
+				var postURL;
+				postURL="sendpw.php?Email="+$("#inputEmail").val();
+				var str="chklogout=true";
+				jQuery.ajax({
+				type: "POST",
+				url: postURL,
+				data: str,
+				cache: false,
+				async: false, 
+				success: function(res){		
+						alert("已取得優惠!");
+					}
+				});
+				*/
+			alert('<?php
+			session_start();
+			echo $_SESSION["UserEmail"];
+			?>');
 			$("#More_"+ProductID).removeAttr("style");
 		}
 	});
