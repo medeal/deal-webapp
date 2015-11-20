@@ -52,11 +52,9 @@ $results=$conn->query("SELECT * FROM Member WHERE Email='".$_POST["inputEmail"].
 //	echo "row:".$row[0];
 //}
 
-echo $total;
-echo "test";
 //if($total==1){
 if($results->num_rows > 0) {
-    echo "Login action";
+    echo "Login";
    $_SESSION["UserEmail"]=$_POST["inputEmail"];
 }else{
    // echo "Error: " . $sql . "<br>" . $conn->error;
@@ -67,7 +65,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
    // echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
+echo "Register";
 //需要get 啟動url
 $Body="請點擊以下連結,立即啟動您的帳號:<br>";
 $Body=$Body."<a href='http://www.medeal.tk/UserValidation.php?Email=".$_POST["inputEmail"]."' target='_blank' title='啟動帳號'>點擊啟動您的帳號</a>";

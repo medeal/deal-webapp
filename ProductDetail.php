@@ -33,6 +33,7 @@ hr{
 </head>
 <body>
 <?php
+
 //include navigation bar php page
 include_once "nav.php";
 ?>
@@ -55,6 +56,7 @@ $(document).ready(function(){
 <div class=container>
 <div class = "row">
 <?php
+session_start();
 $DBconfig=parse_ini_file("DBconfig.ini");
 $servername = $DBconfig['servername'];
 $username = $DBconfig['username'];
@@ -224,12 +226,19 @@ $(document).ready(function(){
             url: "http://www.medeal.tk/PushMail.php", //this is the submit URL
             type: 'POST', //or POST
             data: $('form.form-signin').serialize(),
+			async: false, 
             success: function(data){
-                 alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
+                
+				if(data == "Login") {
+				 alert('已登入!!');
+				}
+				if(data == "Register") {
+				 alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
+				}
 				 $("#Login").modal('hide'); 
             },
 			error:function(data){
-				alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
+				alert('系統錯誤!!');
 				 $("#Login").modal('hide'); 
             }
         });
