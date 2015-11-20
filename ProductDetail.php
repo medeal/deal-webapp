@@ -153,6 +153,29 @@ $conn->close();
 $(document).ready(function(){
 
     $("a").click(function(){
+	//alert(this.id);
+	var Action=this.id;
+	if(Action=="forgetpw"){
+	//alert($("#inputEmail").val());
+	var postURL;
+	postURL="sendpw.php?Email="+$("#inputEmail").val();
+	var str="chklogout=true";
+	jQuery.ajax({
+				type: "POST",
+				url: postURL,
+				data: str,
+				cache: false,
+				async: false, 
+				success: function(res){
+					
+						alert("已發送密碼至您Email!");
+					
+				}
+		});
+		//alert("已發送密碼至您Email!");
+		return false;
+	}
+	
 	var check_session;
 	function CheckForSession() {
 		var str="chklogout=true";
