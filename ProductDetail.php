@@ -229,13 +229,17 @@ $(document).ready(function(){
 		var ActionStr = ActionID.split("_");
 		var Action=ActionStr[0];
 		var ProductID=ActionStr[1];
+		//var UserEmail='<?php echo $_SESSION["UserEmail"]; ?>';
+		//alert('<?php echo $_SESSION["UserEmail"]; ?>');
+		//alert(UserEmail);
+				
 		//alert(Action[0]);
 		if(Action=="Get"){
 			//alert(ActionStr);
 			$("#Get_"+ProductID).css("display", "none");
-				/*
+		
 				var postURL;
-				postURL="sendpw.php?Email="+$("#inputEmail").val();
+				postURL="GetFavor.php?ProductID="+ProductID;
 				var str="chklogout=true";
 				jQuery.ajax({
 				type: "POST",
@@ -247,11 +251,8 @@ $(document).ready(function(){
 						alert("已取得優惠!");
 					}
 				});
-				*/
-			alert('<?php
-			session_start();
-			echo $_SESSION["UserEmail"];
-			?>');
+				
+			
 			$("#More_"+ProductID).removeAttr("style");
 		}
 	});
