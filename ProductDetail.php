@@ -73,8 +73,10 @@ if ($conn->connect_error) {
 
  $ProductID=$_GET['ProductID'];
  $sql = "SELECT * FROM Product,Store where Product.StoreID=Store.StoreID and ProductID='".$ProductID."'";
- $sql2="SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavorPrice FROM MemberFavor where ProductID='".$ProductID."'";
-
+ $sql2="SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavorPrice,COUNT( * ) AS TakeFavorCount FROM MemberFavor where ProductID='".$ProductID."'";
+ //SELECT COUNT( * ) AS TakeFavorCount
+//FROM  `MemberFavor` 
+//WHERE ProductID =  'A002'
 
 $result = $conn->query($sql);
 
@@ -90,6 +92,7 @@ if ($result->num_rows > 0) {
 	$StorePhone="";
 	$FavorPrice=0;
 	$TotalFavorPrice=0;
+	$TakeFavorCount=0;
 	// output data of each row
     while($row = $result->fetch_assoc()) {
 
@@ -109,6 +112,7 @@ if ($result->num_rows > 0) {
 	$result2 = $conn->query($sql2);
 	while($row = $result2->fetch_assoc()) {
 		$TotalFavorPrice=$row["TotalFavorPrice"];
+		$TakeFavorCount=$row["TakeFavorCount"];
 	}
 	$FavorPrice=$StartPrice-$TotalFavorPrice;
 	
@@ -130,7 +134,7 @@ if ($result->num_rows > 0) {
 echo "</table>";
  echo "<hr>";
   //echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
-echo "<font color='gray'>25人在降價,只剩1個</font>";	
+echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個</font>";	
 	echo "<font color='orange'><h3>NT$".$FavorPrice."</h3></font>";
  echo "<b>".$ProductName."</b>";
  
@@ -249,6 +253,7 @@ $(document).ready(function(){
 				async: false, 
 				success: function(res){		
 						alert("已取得優惠!");
+						 location.reload();
 					}
 				});
 				
