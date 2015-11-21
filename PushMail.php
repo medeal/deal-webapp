@@ -58,15 +58,12 @@ if($results->num_rows > 0) {
    $_SESSION["UserEmail"]=$_POST["inputEmail"];
 }else{
    // echo "Error: " . $sql . "<br>" . $conn->error;
+   
    $sql = "INSERT INTO Member(Email,Password,Status) VALUES('".$_POST["inputEmail"]."','".$_POST["inputPassword"]."','N')";
 
 if ($conn->query($sql) === TRUE) {
    // echo "New record created successfully";
-} else {
-   // echo "Error: " . $sql . "<br>" . $conn->error;
-}
-echo "Register";
-//需要get 啟動url
+   //需要get 啟動url
 $Body="請點擊以下連結,立即啟動您的帳號:<br>";
 $Body=$Body."<a href='http://www.medeal.tk/UserValidation.php?Email=".$_POST["inputEmail"]."' target='_blank' title='啟動帳號'>點擊啟動您的帳號</a>";
 $Body=$Body."<br>";
@@ -74,6 +71,13 @@ $Body=$Body."<a href='http://www.medeal.tk/ProductDetail.php?ProductID=A002' tar
 //example to send mail:
 //echo send_simple_message("lisivo@gmail.com","lisivo@gmail.com","test2","body test");
 send_simple_message("admin@medeal.tk",$_POST["inputEmail"],"搶捷帳號驗證啟動信",$Body);
+   echo "Register";
+} else {
+   // echo "Error: " . $sql . "<br>" . $conn->error;
+   echo "Fail";
+}
+
+
 }
 $results->free();
 $conn->close();

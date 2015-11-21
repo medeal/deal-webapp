@@ -283,6 +283,16 @@ $(document).ready(function(){
 });
     $("#RegisterLogin").click('submit', function(e){
 		 e.preventDefault();
+		 //alert($("#inputEmail").val().length);
+		 if($("#inputEmail").val().length === 0){
+			alert("帳號/密碼空白!!");
+			return false;
+		 }
+		 if($("#inputPassword").val().length === 0){
+			alert("帳號/密碼空白!!");
+			return false;
+		 }
+		  
 		$.ajax({
             url: "http://www.medeal.tk/PushMail.php", //this is the submit URL
             type: 'POST', //or POST
@@ -292,11 +302,15 @@ $(document).ready(function(){
                 
 				if(data == "Login") {
 				 alert('已登入!!');
+				 $("#Login").modal('hide'); 
 				}
 				if(data == "Register") {
 				 alert('已註冊完成,請至Email收信啟動帳戶,謝謝!!');
-				}
 				 $("#Login").modal('hide'); 
+				}
+				if(data == "Fail") {
+				 alert("註冊/登入失敗!!");
+				}
             },
 			error:function(data){
 				alert('系統錯誤!!');
