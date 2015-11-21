@@ -5,6 +5,10 @@
 <meta name=viewport content="width=device-width, initial-scale=1">
 <meta name=description content="">
 <meta name=author content="">
+<meta property="og:title" content="請幫我個忙"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="哈囉,我想請你請幫忙我砍價取得優惠,謝謝!!"/>
+<meta property="og:image" content=""/>
 <link rel=icon href=https://kkbruce.tw/Content/AssetsBS3/img/favicon.ico>
 <title>搶捷</title>
 <link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css rel=stylesheet>
@@ -72,8 +76,11 @@ if ($conn->connect_error) {
 } 
 
  $ProductID=$_GET['ProductID'];
+ $_SESSION["ProductID"] = $ProductID;
  $sql = "SELECT * FROM Product,Store where Product.StoreID=Store.StoreID and ProductID='".$ProductID."'";
  $sql2="SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavorPrice,COUNT( * ) AS TakeFavorCount FROM MemberFavor where ProductID='".$ProductID."'";
+ $sql3="SELECT * FROM MemberFavor where ProductID='".$ProductID."' and Email='".$_SESSION["UserEmail"]."'";
+
  //SELECT COUNT( * ) AS TakeFavorCount
 //FROM  `MemberFavor` 
 //WHERE ProductID =  'A002'
@@ -150,18 +157,41 @@ echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個</f
 echo "<a href='tel:098-9980937'>&#9742;</a>";
 
 
-  
-	echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>砍價!</a>";
-		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:none;' >砍更多價!!</a>";
+  //檢查User是否已取得優惠價
+  $result3 = $conn->query($sql3);
+
+  if ($result3->num_rows > 0) {
+			echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:;' >砍更多價!!</a>";
+  }
+  else{
+		echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>砍價!</a>";
+  }
   	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
-	
-		 
+
+
 		 echo "</div>";
  
 } else {
     echo "0 results";
 }
-
+if (empty($result)){
+}
+else{
+	$result->free();
+}
+if (empty($result2)){
+}
+else{
+	$result2->free();
+}
+if (empty($result3)){
+}
+else{
+	$result3->free();
+}
+//$result->free();
+//$result2->free();
+//$result3->free();
 $conn->close();
 ?>
 </div>
@@ -325,6 +355,8 @@ $(document).ready(function(){
 <?php
 //include Login php page
 include_once "Login.php";
+//include More Promotions php page
+include_once "MorePromotions.php";
 //include purchase method php page
 include_once "PurchaseMethod.php";
 //include mailgun mail php page
