@@ -239,6 +239,7 @@ $(document).ready(function(){
 				
 		//alert(Action[0]);
 		if(Action=="Get"){
+			//在取得優惠時,檢查現在是否已在底價,如在底價就不優惠
 			//alert(ActionStr);
 			$("#Get_"+ProductID).css("display", "none");
 		
@@ -253,7 +254,7 @@ $(document).ready(function(){
 				async: false, 
 				success: function(res){		
 						alert("已取得優惠!");
-						 location.reload();
+					    location.reload();
 					}
 				});
 				
