@@ -37,6 +37,7 @@ hr{
 
 </head>
 <body>
+<?php include_once("analyticstracking.php") ?>
 <?php
 
 //include navigation bar php page
@@ -142,8 +143,9 @@ echo "</table>";
  echo "<hr>";
   //echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
 echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個</font>";	
-	echo "<font color='orange'><h3>NT$".$FavorPrice."</h3></font>";
- echo "<b>".$ProductName."</b>";
+
+	echo "<font color='orange'><h3>NT$<label for='lblPurchasePrice' id='lblPurchasePrice'>".$FavorPrice."</label></h3></font>";
+ echo "<b><label for='lblProductName' id='lblProductName'>".$ProductName."</label></b>";
  
  
 
@@ -152,12 +154,12 @@ echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個</f
   echo "<hr>";
   echo "店家名稱:".$StoreName;
   echo "<br>";
-  echo "店家地址:".$StoreAddress;
+ // echo "店家地址:".$StoreAddress;
 
-echo "<a href='tel:098-9980937'>&#9742;</a>";
+//echo "<a href='tel:098-9980937'>&#9742;</a>";
 
-
-  //檢查User是否已取得優惠價
+if($Amount>0){
+//檢查User是否已取得優惠價
   $result3 = $conn->query($sql3);
 
   if ($result3->num_rows > 0) {
@@ -168,6 +170,10 @@ echo "<a href='tel:098-9980937'>&#9742;</a>";
   }
   	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
 
+}else{
+echo "<a href='#' class='btn btn-default btn-lg btn-block'>搶完了...</a>";
+}
+  
 
 		 echo "</div>";
  
@@ -257,7 +263,13 @@ $(document).ready(function(){
        // alert(this.id);
 		var ActionID=this.id;
 		$("#ActionID").val(this.id);
+		//alert("test");
+		var ProductName=$("#lblProductName").text();
+		//alert(ProductName);
+		$("#txtProductName").val(ProductName);
 		
+		var lblPurchasePrice=$("#lblPurchasePrice").text();
+		$("#txtPurchasePrice").val(lblPurchasePrice);
 		//alert(ActionID);
 		//var str = "How are you doing today?";
 		var ActionStr = ActionID.split("_");
@@ -298,15 +310,17 @@ $(document).ready(function(){
         e.preventDefault();
         $.ajax({
             url: "http://www.medeal.tk/process.php", //this is the submit URL
-            type: 'GET', //or POST
+            type: 'POST', //or POST
             data: $('form.contact').serialize(),
             success: function(data){
-                 alert('已購買完成,謝謝!!');
+                 alert('已購買完成,請至Email收取訂單資訊,謝謝!!');
 				 $("#PurchaseMethod").modal('hide'); 
+				 location.reload();
             },
 			error:function(data){
-				alert('已購買完成,謝謝!!');
+				alert('已購買完成,請至Email收取訂單資訊,謝謝!!');
 				 $("#PurchaseMethod").modal('hide'); 
+				 location.reload();
             }
         });
     });

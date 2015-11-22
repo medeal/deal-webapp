@@ -9,12 +9,15 @@
       </div>
       <div class="modal-body">
 	
-      <form class="contact" id="BuyProductForm" action="process.php" method="GET"><h3 class=form-signin-heading>請選擇購買方式</h3>
+      <form class="contact" id="BuyProductForm" action="process.php" method="POST"><h3 class=form-signin-heading>請選擇購買方式</h3>
   <div id="product">
-	  <input id="ActionID" name="ActionID" type="hidden" />
+	  <input id="ActionID" name="ActionID" type="hidden" /><br>
+	  商品名稱:<input id="txtProductName" name="txtProductName" type="" readonly=true /><br>
+	  購入價格:NT$<input id="txtPurchasePrice" name="txtPurchasePrice" type="" readonly=true /><br>
+	  <label for="amount">購買數量:1</label>
 	  </div>
-	  <label>購買方式(一): <input type="radio" name="optradio" id="rdoGetTicket" checked=true>取得優惠卷</label> </br>
-<label>購買方式(二): <input type="radio" name="optradio" id="rdoLinePay">LinePay付款</label> </br>
+	  <!--<label>購買方式(一): <input type="radio" name="optradio" id="rdoGetTicket" checked=true>取得優惠卷</label> </br>-->
+<!--<label>購買方式(二): <input type="radio" name="optradio" id="rdoLinePay">LinePay付款</label> </br>-->
 </br></br>
 <button class="btn btn-lg btn-success btn-block" type=submit id="btnPayMethodOK">確定</button>
 

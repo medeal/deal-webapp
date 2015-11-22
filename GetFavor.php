@@ -31,7 +31,11 @@ $results1=$conn->query("SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavor
  
 //Need to do!!
 //檢查是否以經有優惠過了嗎?
-//$results=$conn->query("SELECT * FROM Member WHERE Email='".$_POST["inputEmail"]."' and Password='".$_POST["inputPassword"]."'");
+$results=$conn->query("SELECT * FROM MemberFavor where ProductID='".$ProductID."' and Email='".$UserEmail."'");
+   if($results->num_rows > 0) {
+   
+   }
+   else{
 //取得每次砍價的幅度
 $results2=$conn->query("SELECT StartPrice,EndPrice,FavorablePrice FROM Product WHERE ProductID='".$ProductID."'");
    if($results2->num_rows > 0) {
@@ -59,8 +63,23 @@ else{
 }
 //$results->free();
 }
-$results1->free();
-$results2->free();
-
+if (empty($result1)){
+}
+else{
+	$results1->free();
+}
+if (empty($results2)){
+}
+else{
+	$results2->free();
+}
+//$results1->free();
+//$results2->free();
+}
+if (empty($results)){
+}
+else{
+	$results->free();
+}
 $conn->close();
 ?>
