@@ -45,7 +45,7 @@ if ($conn->connect_error) {
 } 
 
  $ProductID=$_GET['ProductID'];
- $sql = "SELECT * FROM Product,Store where ProductID!='A001' and Product.StoreID=Store.StoreID";
+ $sql = "SELECT * FROM Product,Store where Product.Open='Y' and Product.StoreID=Store.StoreID";
 
 $result = $conn->query($sql);
 while($row = $result->fetch_assoc()) {
@@ -68,11 +68,11 @@ while($row = $result->fetch_assoc()) {
 	    echo "<CENTER><p>".$ProductName."</p></CENTER>";
 		echo "<CENTER><p>$".$StartPrice."</p></CENTER>";
 		echo "<CENTER><p>".$StoreName."</p></CENTER>";
-		echo "<CENTER><p>新竹市</p></CENTER>";
-	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
+		echo "<CENTER><p></p></CENTER>";
+	   // echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
 		echo "<a href='http://www.medeal.tk/ProductDetail.php?ProductID=".$ProductID."' class='btn btn-primary btn-lg btn-block'>詳細</a>";
-		echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>取得優惠</a>";
-		echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:none;' >取得更多優惠!</a>";
+		//echo "<a href='#' id=Get_".$ProductID." class='btn btn-warning btn-lg btn-block'>取得優惠</a>";
+		//echo "<a href='#' id=More_".$ProductID." class='btn btn-danger btn-lg btn-block' data-toggle='modal' data-target='#MorePromotions' style='display:none;' >取得更多優惠!</a>";
 		if($Amount==0){
 			echo "<a href='#' id=RunOut_".$ProductID." class='btn btn-default btn-lg btn-block'>已搶完</a>";
 		};
@@ -137,6 +137,8 @@ include_once "Login.php";
 include_once "PurchaseMethod.php";
 //include More Promotions php page
 include_once "MorePromotions.php";
+
+include_once "Contact.php";
 ?>
 
 
