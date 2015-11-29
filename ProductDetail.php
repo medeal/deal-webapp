@@ -376,6 +376,7 @@ include_once "PurchaseMethod.php";
 //include mailgun mail php page
 include_once "mailgun.php";
 include_once "Contact.php";
+include_once "Rule.php";
 ?>
 </body>
 </html>

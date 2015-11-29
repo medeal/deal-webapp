@@ -139,6 +139,7 @@ include_once "PurchaseMethod.php";
 include_once "MorePromotions.php";
 
 include_once "Contact.php";
+include_once "Rule.php";
 ?>
 
 
