@@ -171,7 +171,7 @@ if($Amount>0){
   	    echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
 
 }else{
-echo "<a href='#' class='btn btn-default btn-lg btn-block'>搶完了...</a>";
+echo "<a id='RunOut' href='#' class='btn btn-default btn-lg btn-block'>搶完了...</a>";
 }
   
 
@@ -240,9 +240,13 @@ $(document).ready(function(){
 				async: false, 
 				success: function(res){
 					if(res == "1") {
-						alert('請註冊或登入帳號');
-						$('#Login').modal('show');
-						check_session='1';
+						if(Action=="productlist"||Action=="contact"||Action=="rule"||Action=='RunOut'){
+						}
+						else{
+							alert('請註冊或登入帳號');
+							$('#Login').modal('show');
+							check_session='1';
+						};
 					}
 					
 					
@@ -254,6 +258,7 @@ $(document).ready(function(){
 
 	check_session =CheckForSession();
 	//alert(check_session);
+	
 	if(check_session=="1"){
 		return false;
 	}

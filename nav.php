@@ -4,11 +4,11 @@
 <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target=#navbar aria-expanded=false aria-controls=navbar> 
 <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span>
  <span class=icon-bar></span> <span class=icon-bar></span> </button> 
- <a class=navbar-brand href="product.php"><span style="color:#fff">搶捷</span></a></div>
+ <a id="productlist" class=navbar-brand href="product.php"><span style="color:#fff">搶捷</span></a></div>
  <div id=navbar class="collapse navbar-collapse">
  <ul class="nav navbar-nav">
 
-<li><a href=#account><span class="glyphicon glyphicon-headphones" style="color:#fff" data-toggle="modal" data-target="#Contact">客服</span></a><li>
-<li><a href=#account><span class="glyphicon glyphicon-question-sign" style="color:#fff" data-toggle="modal" data-target="#Rule">殺價方法</span></a><li>
+<li><a id="contact" href=#account><span class="glyphicon glyphicon-headphones" style="color:#fff" data-toggle="modal" data-target="#Contact">客服</span></a><li>
+<li><a id="rule" href=#account><span class="glyphicon glyphicon-question-sign" style="color:#fff" data-toggle="modal" data-target="#Rule">殺價方法</span></a><li>
 
  </ul></div></div></nav>
