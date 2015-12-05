@@ -81,7 +81,7 @@ if ($conn->connect_error) {
  $sql = "SELECT * FROM Product,Store where Product.StoreID=Store.StoreID and ProductID='".$ProductID."'";
  $sql2="SELECT IFNULL( SUM( TakeFavorPrice ) , 0 ) AS TotalFavorPrice,COUNT( * ) AS TakeFavorCount FROM MemberFavor where ProductID='".$ProductID."'";
  $sql3="SELECT * FROM MemberFavor where ProductID='".$ProductID."' and Email='".$_SESSION["UserEmail"]."'";
-
+ $sql4="SELECT IFNULL(sum(PurchaseAmount),0) as PurchaseAmount FROM ecOrder WHERE ProductID='".$ProductID."'";
  //SELECT COUNT( * ) AS TakeFavorCount
 //FROM  `MemberFavor` 
 //WHERE ProductID =  'A002'
@@ -101,6 +101,7 @@ if ($result->num_rows > 0) {
 	$FavorPrice=0;
 	$TotalFavorPrice=0;
 	$TakeFavorCount=0;
+	$PurchaseAmount=0;
 	// output data of each row
     while($row = $result->fetch_assoc()) {
 
@@ -124,6 +125,12 @@ if ($result->num_rows > 0) {
 	}
 	$FavorPrice=$StartPrice-$TotalFavorPrice;
 	
+	$result4 = $conn->query($sql4);
+	while($row = $result4->fetch_assoc()) {
+		$PurchaseAmount=$row["PurchaseAmount"];
+	}
+
+	
 	echo "<div class='panel panel-primary'>";
  echo "<div class='panel-heading'>";
  echo "<center><h3 class='panel-title'>商品介紹</h3></center>";
@@ -142,7 +149,7 @@ if ($result->num_rows > 0) {
 echo "</table>";
  echo "<hr>";
   //echo "<CENTER><h3>剩下".$Amount."個</h3></CENTER>";
-echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個</font>";	
+echo "<font color='gray'>".$TakeFavorCount."人在降價,只剩".$Amount."個,已賣掉".$PurchaseAmount."個</font>";	
 
 	echo "<font color='orange'><h3>NT$<label for='lblPurchasePrice' id='lblPurchasePrice'>".$FavorPrice."</label></h3></font>";
  echo "<b><label for='lblProductName' id='lblProductName'>".$ProductName."</label></b>";
@@ -194,6 +201,11 @@ if (empty($result3)){
 }
 else{
 	$result3->free();
+}
+if (empty($result4)){
+}
+else{
+	$result4->free();
 }
 //$result->free();
 //$result2->free();
@@ -265,7 +277,7 @@ $(document).ready(function(){
 	
 	
   //$("p").slideToggle();
-       // alert(this.id);
+      // alert(this.id);
 		var ActionID=this.id;
 		$("#ActionID").val(this.id);
 		//alert("test");
