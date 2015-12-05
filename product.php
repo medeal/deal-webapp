@@ -52,6 +52,7 @@ while($row = $result->fetch_assoc()) {
 		$ProductName=$row["ProductName"];
 		$Image_1=$row["Image_1"];
 		$StartPrice=$row["StartPrice"];
+		$CurrentPrice=$row["CurrentPrice"];
 		$StoreName=$row["StoreName"];
 		$ProductID=$row["ProductID"];
 		$Amount=$row["Amount"];
@@ -65,8 +66,8 @@ while($row = $result->fetch_assoc()) {
 		echo "</th>";
 		echo "<br>";
 		echo "<th  style ='width:50%;'>";
-	    echo "<CENTER><p>".$ProductName."</p></CENTER>";
-		echo "<CENTER><p>$".$StartPrice."</p></CENTER>";
+	    echo "<CENTER><p>商品名稱:".$ProductName."</p></CENTER>";
+		echo "<CENTER><p>售價:<del>$".$StartPrice."</del></p><p>搶購中:$".$CurrentPrice."</p></CENTER>";
 		echo "<CENTER><p>".$StoreName."</p></CENTER>";
 		echo "<CENTER><p></p></CENTER>";
 	   // echo "<a href='#' id=Buy_".$ProductID." class='btn btn-success btn-lg btn-block' data-toggle='modal' data-target='#PurchaseMethod'>立即購買</a>";
